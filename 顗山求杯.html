@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>顗山道宮求筊</title>
+  <style>
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      background-image: url("www.png");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+    }
+
+    h1.temple-title {
+      font-size: 3em;
+      color: #ffd700;
+      font-weight: bold;
+      text-shadow: 3px 3px 8px #aa0000;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+    }
+
+    .input-section {
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 1.1em;
+      width: 60%;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+    }
+
+    select {
+      padding: 10px;
+      font-size: 1.1em;
+      width: 60%;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
+      margin-top: 20px;
+    }
+
+    .jiao-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 30px 0;
+    }
+
+    .jiao {
+      width: 100px;
+      height: 150px;
+      transition: transform 0.8s ease, filter 0.5s ease;
+      filter: drop-shadow(0 8px 15px rgba(0,0,0,0.6));
+      border-radius: 20px;
+    }
+
+    .jiao.flip {
+      animation: flipJump 0.8s ease;
+    }
+
+    @keyframes flipJump {
+      0% { transform: translateY(0) rotateY(0deg); }
+      30% { transform: translateY(-50px) rotateY(180deg); }
+      60% { transform: translateY(0) rotateY(360deg); }
+      100% { transform: translateY(0) rotateY(720deg); }
+    }
+
+    #result {
+      font-size: 1.6em;
+      margin: 20px 0;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1.2em;
+      background: linear-gradient(145deg, #d4af37, #ffcc00);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: linear-gradient(145deg, #ffcc00, #d4af37);
+    }
+
+    .footer {
+      font-size: 0.9em;
+      margin-top: 40px;
+      color: #ffffff;
+    }
+
+    .footer p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+<div id="particles-js"></div>
+<h1 class="temple-title">顗山道宮求筊</h1>
+
+<div class="input-section">
+  <input type="text" id="wish" placeholder="請輸入你的祈問內容，如：是否適合轉職？">
+</div>
+
+<div class="input-section">
+  <label for="deityMode">選擇神明方式：</label>
+  <select id="deityMode">
+    <option value="指定">指定神明</option>
+    <option value="隨機">隨機神明</option>
+  </select>
+</div>
+
+<div class="input-section" id="deitySection">
+  <select id="deity">
+    <option value="顗山道尊">顗山道尊</option>
+    <option value="宇宙">宇宙</option>
+    <option value="媽祖">媽祖</option>
+    <option value="關公">關公</option>
+    <option value="財神">財神</option>
+    <option value="城隍">城隍</option>
+    <option value="土地公">土地公</option>
+    <option value="文昌帝君">文昌帝君</option>
+    <option value="觀音菩薩">觀音菩薩</option>
+    <option value="城隍爺">城隍爺</option>
+    <option value="太上老君">太上老君</option>
+    <option value="媽祖娘娘">媽祖娘娘</option>
+    <option value="藥師佛">藥師佛</option>
+    <option value="佛祖">佛祖</option>
+    <option value="文殊菩薩">文殊菩薩</option>
+    <option value="普賢菩薩">普賢菩薩</option>
+    <option value="天官大帝">天官大帝</option>
+    <option value="水官大帝">水官大帝</option>
+    <option value="地官大帝">地官大帝</option>
+    <option value="雷祖">雷祖</option>
+    <option value="武財神">武財神</option>
+    <option value="文財神">文財神</option>
+    <option value="玉皇大帝">玉皇大帝</option>
+    <option value="北極玄帝">北極玄帝</option>
+    <option value="紫微大帝">紫微大帝</option>
+    <option value="玄天上帝">玄天上帝</option>
+    <option value="太白金星">太白金星</option>
+    <option value="孔子">孔子</option>
+    <option value="地藏菩薩">地藏菩薩</option>
+  </select>
+</div>
+
+<div class="jiao-container">
+  <img id="img1" class="jiao" src="yang.png" alt="杯1">
+  <img id="img2" class="jiao" src="yin.png" alt="杯2">
+</div>
+
+<div id="result">請虔誠擲筊，靜心思問</div>
+<button onclick="throwJiao()">擲筊</button>
+
+<div class="footer">
+  <p>本程式好似具有通靈功能，僅供參考與娛樂使用。</p>
+</div>
+
+<audio id="throwSound" src="WWW.wav"></audio>
+
+<script>
+  // 監聽選擇方式改變事件
+  document.getElementById('deityMode').addEventListener('change', function() {
+    const deityMode = this.value;
+    const deitySection = document.getElementById('deitySection');
+    
+    if (deityMode === '隨機') {
+      deitySection.style.display = 'none';
+    } else {
+      deitySection.style.display = 'block';
+    }
+  });
+
+  function throwJiao() {
+    const audio = document.getElementById('throwSound');
+    audio.play();
+
+    const j1 = document.getElementById('img1');
+    const j2 = document.getElementById('img2');
+    j1.classList.add('flip');
+    j2.classList.add('flip');
+
+    setTimeout(() => {
+      j1.classList.remove('flip');
+      j2.classList.remove('flip');
+
+      const states = ['yang.png', 'yin.png'];
+      const i1 = Math.floor(Math.random() * 2);
+      const i2 = Math.floor(Math.random() * 2);
+
+      j1.src = states[i1];
+      j2.src = states[i2];
+
+      const wish = document.getElementById('wish').value || '你所詢問的問題';
+
+      // 根據選擇的神明方式來確定神明
+      const deityMode = document.getElementById('deityMode').value;
+      let deity = '';
+      
+      if (deityMode === '隨機') {
+        const deities = [
+          "顗山道尊", "宇宙", "媽祖", "關公", "財神", "城隍", "土地公", "文昌帝君", "觀音菩薩", "城隍爺",
+          "太上老君", "媽祖娘娘", "藥師佛", "佛祖", "文殊菩薩", "普賢菩薩", "天官大帝", "水官大帝",
+          "地官大帝", "雷祖", "武財神", "文財神", "玉皇大帝", "北極玄帝", "紫微大帝", "玄天上帝", "太白金星", "孔子", "地藏菩薩"
+        ];
+        deity = deities[Math.floor(Math.random() * deities.length)];
+      } else {
+        deity = document.getElementById('deity').value;
+      }
+
+      let resultText = '';
+      let color = '';
+
+      if (i1 !== i2) {
+        resultText = `${deity} 聖筊 🙏：${wish} 有神明應允之象！`;
+        color = '#66ff99';
+      } else if (i1 === 0) {
+        resultText = `${deity} 笑筊 😄：${wish} 神明笑而不答，請再擲一次。`;
+        color = '#ffcc66';
+      } else {
+        resultText = `${deity} 陰筊 ❌：${wish} 恐怕不可行，需三思再請。`;
+        color = '#ff6666';
+      }
+
+      const result = document.getElementById('result');
+      result.innerText = resultText;
+      result.style.color = color;
+
+    }, 800);
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script>
+  particlesJS("particles-js", {
+    particles: {
+      number: { value: 60 },
+      color: { value: "#ffffff" },
+      opacity: { value: 0.2, random: true },
+      size: { value: 12, random: true },
+      move: {
+        enable: true,
+        speed: 0.6,
+        direction: "top",
+        out_mode: "out"
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
